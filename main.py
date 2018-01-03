@@ -63,7 +63,8 @@ for epoch in range(num_epoch):
         noise = torch.rand(batchSize,100).view(-1,100,1,1,1)
         noise = to_variable(noise)
 
-        fake_videos = generator(noise)
+	# stop backprop to the generator by detaching fake_videos
+        fake_videos = generator(noise).detach()
         outputs = discriminator(fake_videos)
         
         fake_score = outputs # Needed for tracking?
